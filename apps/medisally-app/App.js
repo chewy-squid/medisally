@@ -1,12 +1,14 @@
 import React from 'react'
 import { Text, View } from 'react-native';
-import useSWR, { SWRConfig } from 'swr'
+import { SWRConfig } from 'swr'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import uuid from 'react-native-uuid'
 import MSD from 'medisally-data'
 import * as FileSystem from 'expo-file-system';
+import { NavigationContainer } from '@react-navigation/native';
+import AppContainer from './src/AppContainer'
 
-export default function App() {
+const App = () => {
   const [msd, setMsd] = React.useState(null)
 
   React.useEffect(() => {
@@ -20,11 +22,14 @@ export default function App() {
       const filename = 'userData.json'
 
       const load = async () => {
-        const file = await FileSystem.readAsStringAsync(FileSystem.documentDirectory + filename)
-        if (file) {
+        const fileExists = await FileSystem.getInfoAsync(FileSystem.documentDirectory + filename)
+        if (fileExists.exists) {
+          const file = await FileSystem.readAsStringAsync(FileSystem.documentDirectory + filename)
           return JSON.parse(file)
+        } else {
+          await FileSystem.writeAsStringAsync(FileSystem.documentDirectory + filename, JSON.stringify({}))
+          return {}
         }
-        return {}
       }
 
       const save = async (json) => {
@@ -49,19 +54,11 @@ export default function App() {
 
   return (
     <SWRConfig value={{fetcher: (...args) => msd.fetcher(...args)}}>
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        <InnerComponent/>
-      </View>
+      <NavigationContainer>
+        <AppContainer/>
+      </NavigationContainer>
     </SWRConfig>
   );
 }
 
-const InnerComponent = () => {
-  const { data, error } = useSWR('/test')
-
-  return (
-    <View>
-      <Text>{data || 'failed...'}</Text>
-    </View>
-  )
-}
+export default App

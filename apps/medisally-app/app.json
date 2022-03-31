@@ -1,8 +1,9 @@
 {
   "expo": {
-    "name": "medisally-app",
-    "slug": "medisally-app",
-    "version": "1.0.0",
+    "name": "medisally",
+    "slug": "medisally",
+    "owner": "picklejuiceya",
+    "version": "0.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
