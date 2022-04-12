@@ -7,6 +7,7 @@ import MSD from 'medisally-data'
 import * as FileSystem from 'expo-file-system';
 import { NavigationContainer } from '@react-navigation/native';
 import AppContainer from './src/AppContainer'
+import themes from './src/util/Theme.js'
 
 const App = () => {
   const [msd, setMsd] = React.useState(null)
@@ -54,7 +55,7 @@ const App = () => {
 
   return (
     <SWRConfig value={{fetcher: (...args) => msd.fetcher(...args)}}>
-      <NavigationContainer>
+      <NavigationContainer theme={themes.default}>
         <AppContainer/>
       </NavigationContainer>
     </SWRConfig>
