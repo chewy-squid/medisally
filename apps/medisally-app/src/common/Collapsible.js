@@ -24,7 +24,7 @@ const Collapsible = (props) => {
       shadowColor: "rgba(0,0,0,0.15)",
       shadowOffset: {
         width: 0,
-        height: 0,
+        height: 5,
       },
       shadowOpacity: 0.34,
       shadowRadius: 6.27,
@@ -36,11 +36,27 @@ const Collapsible = (props) => {
           deg.value = withTiming(deg.value === 180 ? 0 : 180)
         }}>
           <View style={{flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', paddingHorizontal:15, height: BAR_HEIGHT}}>
-            <View style={{width: 13, height: 13, borderRadius: 13, backgroundColor: 'tomato', marginRight: 10}}/>
+            <View style={{width: 12, height: 12, borderRadius: 12, backgroundColor: 'tomato', marginRight: 10}}/>
             <Text style={{fontSize: 20, fontWeight: '700', color: colors.text}}>{props.title}</Text>
-            <Animated.View style={[buttonStyle, {marginLeft: 'auto'}]}>
+            {/* <Animated.View style={[buttonStyle, {marginLeft: 'auto'}]}>
               <Ionicons name="chevron-up" size={25} color={colors.gray3} />
-            </Animated.View>
+            </Animated.View> */}
+            <TouchableOpacity style={{marginLeft: 'auto'}}>
+              <View style={{padding: 10}}>
+                <View style={{backgroundColor: '#ddd', borderRadius: 10, alignItems: 'center', justifyContent: 'center', width: 35, height: 35,
+                shadowColor: "rgba(0,0,0,0.25)",
+                shadowOffset: {
+                  width: 0,
+                  height: 0,
+                },
+                shadowOpacity: 0.34,
+                shadowRadius: 6.27,
+                elevation: 10,
+              }}>
+                  <Ionicons name="bar-chart" size={18} color={'#999'} />
+                </View>
+              </View>
+            </TouchableOpacity>
           </View>
         </TouchableOpacity>
 

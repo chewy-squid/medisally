@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons'; 
 import { LinearGradient } from 'expo-linear-gradient';
 
-import HomeScreen from './home/HomeScreen.js'
+import HomeScreenStack from './home/HomeScreen.js'
 import StatsScreen from './stats/StatsScreen.js'
 
 import AddModal from './add/AddModal.js'
@@ -49,12 +49,12 @@ const AppContainer = () => {
               />
             </View>
           ),
-          tabBarInactiveTintColor: '#c9cdd3',
-          tabBarStyle: {height:90},
-          tabBarLabelStyle: {marginTop: -15}
+          tabBarInactiveTintColor: '#bdc4cb',
+          tabBarStyle: {height:90, backgroundColor: '#fafbfa'},
+          tabBarLabelStyle: {marginTop: -15},
         })}
       >
-        <Tab.Screen name="Home" component={HomeScreen} options={{ title: '홈', headerShown: false }}/>
+        <Tab.Screen name="HomeStack" component={HomeScreenStack} options={{ title: '홈', headerShown: false }}/>
         <Tab.Screen name="Pay" component={AddScreen} options={{
           tabBarButton: () => (<AddModalButton/>),
         }} />

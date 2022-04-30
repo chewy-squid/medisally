@@ -8,12 +8,10 @@ const CheckList = (props) => {
 
   const [items, setItems] = React.useState([
     {
-      content: '질문 1',
-      checked: false,
+      content: '질문 1'
     },
     {
-      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut ',
-      checked: true,
+      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut '
     }
   ])
 
@@ -32,10 +30,10 @@ const CheckList = (props) => {
         <Text style={{fontSize: 20, fontWeight: '700', color: colors.text, marginVertical: 10}}>메모</Text>
         <TouchableOpacity onPress={() => {}}>
           <Ionicons name="add-circle" size={30} color={colors.primary} style={{width: 30, height: 30,
-            shadowColor: "rgba(0,0,0,0.5)",
+            shadowColor: "rgba(0,0,0,0.25)",
             shadowOffset: {
               width: 0,
-              height: 0,
+              height: 5,
             },
             shadowOpacity: 0.34,
             shadowRadius: 6.27,
@@ -47,9 +45,9 @@ const CheckList = (props) => {
       {items.map((item, index) => (
         <TouchableOpacity key={index} onPress={() => {}}>
           <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: index === items.length - 1 ? 0 : 15 }}>
-            <Ionicons name={item.checked ? "checkbox" : 'square-outline'} size={25} color={item.checked ? colors.primary : colors.gray3} style={{width: 25, height: 25, alignItems: 'center', justifyContent: 'center', marginRight: 10}}/>
+            <Ionicons name={'close-circle'} size={25} color='#fd2b2e' style={{width: 25, height: 25, alignItems: 'center', justifyContent: 'center', marginRight: 10}}/>
             <View style={{flex: 1, borderRadius: 5, borderWidth: StyleSheet.hairlineWidth, borderColor: colors.border, minHeight: 20, padding: 10, backgroundColor: colors.background}}>
-              <Text style={{color: colors.text, textDecorationLine: item.checked ? 'line-through' : 'none', textDecorationColor: colors.primary, textDecorationStyle: 'double'}}>{item.content}</Text>
+              <Text style={{color: '#111', lineHeight: 25, fontSize: 15, fontWeight: '500'}}>{item.content}</Text>
             </View>
           </View>
         </TouchableOpacity>

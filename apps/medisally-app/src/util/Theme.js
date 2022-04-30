@@ -2,11 +2,11 @@ const themes = {
   default: {
     dark: false,
     colors: {
-      background: "#f6f7f9",
-      border: "#dedfe1",
+      background: "#f1f2f5",
+      border: "#dfdfdf",
       card: "#fefeff",
-      primary: "#4da864",
-      text: "#010000",
+      primary: "#189d4a",
+      text: "#000100",
 
       lightred: '#fff5f5',
       lightgreen: '#f5fcf5',

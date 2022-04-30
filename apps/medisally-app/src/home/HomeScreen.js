@@ -3,6 +3,10 @@ import { ScrollView, View, StyleSheet, Text, TouchableOpacity, Image, Dimensions
 import useSWR from 'swr'
 import { useTheme } from '@react-navigation/native';
 import { SimpleLineIcons } from '@expo/vector-icons'
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Ionicons } from '@expo/vector-icons'
+
+import MyPage from './MyPage.js'
 
 import Collapsible from '../common/Collapsible.js'
 import QuickRecordBox from './QuickRecord.js'
@@ -12,8 +16,18 @@ import Calendar from './Calendar.js'
 import Header from '../common/Header.js'
 import GradientBackground from '../common/GradientBackground.js'
 
+const Stack = createNativeStackNavigator();
 
-const HomeScreen = () => {
+const HomeScreenStack = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Home" component={HomeScreen} options={{headerShown: false}} />
+      <Stack.Screen name="MyPage" component={MyPage} options={{headerShown: false}} />
+    </Stack.Navigator>
+  )
+}
+
+const HomeScreen = ({navigation}) => {
   const { colors } = useTheme()
   const { data, error } = useSWR('/test')
 
@@ -25,7 +39,9 @@ const HomeScreen = () => {
       <Header showHeaderBorder={showHeaderBorder}>
         <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 25}}>
           <Text style={{fontSize: 30, fontWeight: 'bold', color: colors.text}}>홈</Text>
-          <Image source={require('../../assets/dory.jpg')} style={{width: 35, height: 35, borderRadius: 35, borderWidth: 1, borderColor: 'rgba(0,0,0,0.5)'}} />
+          <TouchableOpacity onPress={() => navigation.navigate('MyPage')}>
+            <Ionicons name="person-circle" size={35} style={{color: colors.gray}}/> 
+          </TouchableOpacity>
         </View>
       </Header>
 
@@ -51,7 +67,7 @@ const HomeScreen = () => {
 
         <Calendar style={{margin: 7.5}}/>
 
-        <Collapsible title="증상 1" style={{margin: 7.5}}>
+        <Collapsible title="증상 1" closed style={{margin: 7.5}}>
           <QuickRecordBox/>
         </Collapsible>
         <Collapsible title="증상 2" closed style={{margin: 7.5}}>
@@ -80,4 +96,4 @@ const AddSymptomButton = (props) => {
   )
 }
 
-export default HomeScreen
+export default HomeScreenStack
