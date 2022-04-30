@@ -3,10 +3,10 @@
   "name": "medisally",
   "version": "0.0.1",
   "workspaces": [
-    "apps/*",
     "packages/*"
   ],
   "scripts": {
-    "app": "yarn workspace medisally-app start"
+    "app": "yarn workspace medisally-app start",
+    "server": "yarn workspace medisally-server dev"
   }
 }

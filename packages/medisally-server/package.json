@@ -1,0 +1,13 @@
+{
+  "name": "medisally-server",
+  "version": "0.0.1",
+  "main": "index.js",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "express": "^4.18.1"
+  },
+  "scripts": {
+    "dev": "npx nodemon index.js"
+  }
+}
