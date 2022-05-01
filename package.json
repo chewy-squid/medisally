@@ -8,6 +8,6 @@
   "scripts": {
     "app": "yarn workspace medisally-app start",
     "server": "yarn workspace medisally-server dev",
-    "start": "node ./packages/medisally-server/index.js"
+    "start": "yarn workspace medisally-server dev"
   }
 }
