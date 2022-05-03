@@ -33,7 +33,7 @@ module.exports = function (sequelize, DataTypes) {
     video: {
       type: DataTypes.STRING,
     },
-    photo: {
+    imageUrls: {
       type: DataTypes.STRING,
     },
   });

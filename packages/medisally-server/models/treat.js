@@ -24,13 +24,13 @@ module.exports = function (sequelize, DataTypes) {
     memo: {
       type: DataTypes.STRING,
     },
-    voice: {
+    voiceUrl: {
       type: DataTypes.STRING,
     },
-    video: {
+    videoUrl: {
       type: DataTypes.STRING,
     },
-    photo: {
+    imageUrls: {
       type: DataTypes.STRING,
     },
   });

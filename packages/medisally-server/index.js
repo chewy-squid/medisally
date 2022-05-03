@@ -10,10 +10,48 @@ const port = process.env.PORT || 8080;
 
 app.use(express.json());
 app.use(cors());
+app.use("/uploads", express.static("uploads"));
 
-app.get("/", (req, res) => {
-  q;
-  res.send("Hello World!");
+const upload = multer({
+  storage: multer.diskStorage({
+    destination(req, file, done) {
+      done(null, "uploads/");
+    },
+    filename(req, file, done) {
+      //"파일명+현재시간" 이름으로 파일이 업로드됨.
+      done(
+        null,
+        file.originalname +
+          String(dayjs(Date.now()).format("YYYY-MM-DD HH-mm-ss"))
+      );
+    },
+  }),
+});
+
+//이미지 url array 되돌려주기
+app.post("/image", upload.array("images"), (req, res) => {
+  const files = req.files;
+  const imageUrls = [];
+  for (const imageInfo of files) {
+    imageUrls.push(imageInfo.path);
+  }
+  res.send({ imageUrls: imageUrls });
+});
+
+//비디오 url 되돌려주기
+app.post("/video", upload.single("video"), (req, res) => {
+  const file = req.file;
+  res.send({
+    videoUrl: file.path,
+  });
+});
+
+//voice url 되돌려주기
+app.post("/voice", upload.single("voice"), (req, res) => {
+  const file = req.file;
+  res.send({
+    voiceUrl: file.path,
+  });
 });
 
 //증상 기록 업로드하기
@@ -27,9 +65,9 @@ app.post("/symptoms", (req, res) => {
     numbScale,
     scaleType,
     memo,
-    voice,
-    video,
-    photo,
+    voiceUrl,
+    videoUrl,
+    imageUrls,
   } = body;
   if (!time || !importance || !symptomType || !scaleType) {
     res.status(400).send("필수 입력 항목을 입력하지 않음");
@@ -42,9 +80,9 @@ app.post("/symptoms", (req, res) => {
     numbScale,
     scaleType,
     memo,
-    voice,
-    video,
-    photo,
+    voiceUrl,
+    videoUrl,
+    imageUrls,
   })
     .then((result) => {
       console.log("증상 기록 생성 결과 :", result);
@@ -116,9 +154,9 @@ app.post("/treats", (req, res) => {
     treatType,
     effect,
     memo,
-    voice,
-    video,
-    photo,
+    voiceUrl,
+    videoUrl,
+    imageUrls,
   } = body;
   if (!time || !importance || !symptomType || !treatType) {
     res.status(400).send("필수 입력 항목을 입력하지 않음");
@@ -129,9 +167,9 @@ app.post("/treats", (req, res) => {
     symptomType,
     treatType,
     memo,
-    voice,
-    video,
-    photo,
+    voiceUrl,
+    videoUrl,
+    imageUrls,
   })
     .then((result) => {
       console.log("복약/처치 기록 생성 결과 :", result);
