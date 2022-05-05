@@ -96,6 +96,64 @@ app.post("/symptoms", (req, res) => {
     });
 });
 
+//증상 기록 수정하기
+app.put("/symptoms/:id", (req, res) => {
+  const body = req.body;
+  const {
+    time,
+    importance,
+    symptomType,
+    fiveScale,
+    numbScale,
+    scaleType,
+    memo,
+    voiceUrl,
+    videoUrl,
+    imageUrls,
+  } = body;
+  const params = req.params;
+  const { id } = params;
+  models.Symptom.update(
+    {
+      time: time,
+      importance: importance,
+      symptomType: symptomType,
+      fiveScale: fiveScale,
+      numbScale: numbScale,
+      scaleType: scaleType,
+      memo: memo,
+      voiceUrl: voiceUrl,
+      videoUrl: videoUrl,
+      imageUrls: imageUrls,
+    },
+    {
+      where: {
+        id: id,
+      },
+    }
+  )
+    .then((result) => {
+      res.send({
+        result,
+      });
+    })
+    .catch((error) => {
+      res.status(400).send(`${id}번 증상 업데이트에 에러 발생`);
+    });
+});
+
+//증상 기록 삭제하기
+app.delete("/symptoms/:id", (req, res) => {
+  const params = req.params;
+  const { id } = params;
+  models.Symptom.destroy({
+    where: {
+      id: id,
+    },
+  });
+  res.send("Delete Request Sent");
+});
+
 //증상 종류별 증상 기록 모두 불러오기
 app.get("/symptomsByType", (req, res) => {
   const symptomType = req.query.symptomType;
@@ -166,6 +224,7 @@ app.post("/treats", (req, res) => {
     importance,
     symptomType,
     treatType,
+    effect,
     memo,
     voiceUrl,
     videoUrl,
@@ -233,7 +292,7 @@ app.get("/treatsByDate", (req, res) => {
 app.post("/user", (req, res) => {
   const body = req.body;
   const { nickname, desigSex, birthDate } = body;
-  if (!time || !importance || !symptomType || !treatType) {
+  if (!nickname || !desigSex || !birthDate) {
     res.status(400).send("필수 입력 항목을 입력하지 않음");
   }
   models.User.create({
@@ -269,6 +328,31 @@ app.get("/user", (req, res) => {
     .catch((err) => {
       console.error(err);
       res.status(400).send("유저 조회에 에러 발생");
+    });
+});
+
+//증상 종류 등록
+app.post("/symptomType", (req, res) => {
+  const body = req.body;
+  const { user, name, color, treatType } = body;
+  if (!user || !name || !color) {
+    res.status(400).send("필수 입력 항목을 입력하지 않음");
+  }
+  models.User.create({
+    user,
+    name,
+    color,
+    treatType,
+  })
+    .then((result) => {
+      console.log("증상 종류 생성 결과 :", result);
+      res.send({
+        result,
+      });
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(400).send("증상 종류 생성에 문제가 발생했습니다.");
     });
 });
 
