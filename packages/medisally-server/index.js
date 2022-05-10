@@ -4,6 +4,7 @@ const models = require("./models");
 const dayjs = require("dayjs");
 const { Op } = require("sequelize");
 const multer = require("multer");
+const symptomType = require("./symptomtype");
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -332,28 +333,46 @@ app.get("/user", (req, res) => {
 });
 
 //증상 종류 등록
-app.post("/symptomType", (req, res) => {
+app.post("/symptom-type", async (req, res) => {
+  const userUUID = req.query.UUID;
+  console.log(userUUID);
   const body = req.body;
-  const { user, name, color, treatType } = body;
-  if (!user || !name || !color) {
+  const { name, color, treatType } = body;
+  if (!name || !color) {
     res.status(400).send("필수 입력 항목을 입력하지 않음");
   }
-  models.User.create({
-    user,
+  console.log(name, color, treatType);
+  const user = await models.User.findOne({
+    where: {
+      UUID: userUUID,
+    },
+  });
+  console.log("user는 ", user);
+  models.SymptomType.create({
+    UserUUID: userUUID,
     name,
     color,
     treatType,
-  })
-    .then((result) => {
-      console.log("증상 종류 생성 결과 :", result);
-      res.send({
-        result,
-      });
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(400).send("증상 종류 생성에 문제가 발생했습니다.");
-    });
+    user: user.dataValues,
+  }).then((result) => {
+    res.send(result);
+  });
+});
+
+app.get("/symptom-type", async (req, res) => {
+  const userUUID = req.query.UUID;
+  models.User.findOne({
+    where: {
+      UUID: userUUID,
+    },
+    include: [
+      {
+        model: models.SymptomType,
+      },
+    ],
+  }).then((result) => {
+    res.send(result);
+  });
 });
 
 app.listen(port, () => {
