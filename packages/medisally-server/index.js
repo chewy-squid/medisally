@@ -4,7 +4,10 @@ const models = require("./models");
 const dayjs = require("dayjs");
 const { Op } = require("sequelize");
 const multer = require("multer");
-const symptomType = require("./symptomtype");
+const userRouter = require("./routes/user.js");
+const symptomTypeRouter = require("./routes/symptomtype.js");
+const symptomRouter = require("./routes/symptom.js");
+const treatRouter = require("./routes/treat.js");
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -12,6 +15,11 @@ const port = process.env.PORT || 8080;
 app.use(express.json());
 app.use(cors());
 app.use("/uploads", express.static("uploads"));
+
+app.use("/", userRouter);
+app.use("/", symptomTypeRouter);
+app.use("/", symptomRouter);
+app.use("/", treatRouter);
 
 const upload = multer({
   storage: multer.diskStorage({
@@ -53,48 +61,6 @@ app.post("/voice", upload.single("voice"), (req, res) => {
   res.send({
     voiceUrl: file.path,
   });
-});
-
-//증상 기록 업로드하기
-app.post("/symptoms", (req, res) => {
-  const body = req.body;
-  const {
-    time,
-    importance,
-    symptomType,
-    fiveScale,
-    numbScale,
-    scaleType,
-    memo,
-    voiceUrl,
-    videoUrl,
-    imageUrls,
-  } = body;
-  if (!time || !importance || !symptomType || !scaleType) {
-    res.status(400).send("필수 입력 항목을 입력하지 않음");
-  }
-  models.Symptom.create({
-    time,
-    importance,
-    symptomType,
-    fiveScale,
-    numbScale,
-    scaleType,
-    memo,
-    voiceUrl,
-    videoUrl,
-    imageUrls,
-  })
-    .then((result) => {
-      console.log("증상 기록 생성 결과 :", result);
-      res.send({
-        result,
-      });
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(400).send("증상 기록 업로드에 문제가 발생했습니다.");
-    });
 });
 
 //증상 기록 수정하기
@@ -203,46 +169,6 @@ app.get("/symptomsByDate", (req, res) => {
     });
 });
 
-//복약/처치 기록 업로드하기
-app.post("/treats", (req, res) => {
-  const body = req.body;
-  const {
-    time,
-    importance,
-    symptomType,
-    treatType,
-    effect,
-    memo,
-    voiceUrl,
-    videoUrl,
-    imageUrls,
-  } = body;
-  if (!time || !importance || !symptomType || !treatType) {
-    res.status(400).send("필수 입력 항목을 입력하지 않음");
-  }
-  models.Treat.create({
-    time,
-    importance,
-    symptomType,
-    treatType,
-    effect,
-    memo,
-    voiceUrl,
-    videoUrl,
-    imageUrls,
-  })
-    .then((result) => {
-      console.log("복약/처치 기록 생성 결과 :", result);
-      res.send({
-        result,
-      });
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(400).send("복약/처치 기록 업로드에 문제가 발생했습니다.");
-    });
-});
-
 //증상 종류별 복약/처치 기록 모두 조회하기
 app.get("/treats", (req, res) => {
   const symptomType = req.query.symptomType;
@@ -287,92 +213,6 @@ app.get("/treatsByDate", (req, res) => {
       console.error(err);
       res.status(400).send("날짜별 복약/처치 기록 조회에 에러 발생");
     });
-});
-
-//유저 정보 등록
-app.post("/user", (req, res) => {
-  const body = req.body;
-  const { nickname, desigSex, birthDate } = body;
-  if (!nickname || !desigSex || !birthDate) {
-    res.status(400).send("필수 입력 항목을 입력하지 않음");
-  }
-  models.User.create({
-    nickname,
-    desigSex,
-    birthDate,
-  })
-    .then((result) => {
-      console.log("유저 생성 결과 :", result);
-      res.send({
-        result,
-      });
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(400).send("유저 생성에 문제가 발생했습니다.");
-    });
-});
-
-//유저 정보 가져오기
-app.get("/user", (req, res) => {
-  const UUID = req.query.UUID;
-  models.User.findOne({
-    where: {
-      UUID: UUID,
-    },
-  })
-    .then((result) => {
-      res.send({
-        user: result,
-      });
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(400).send("유저 조회에 에러 발생");
-    });
-});
-
-//증상 종류 등록
-app.post("/symptom-type", async (req, res) => {
-  const userUUID = req.query.UUID;
-  console.log(userUUID);
-  const body = req.body;
-  const { name, color, treatType } = body;
-  if (!name || !color) {
-    res.status(400).send("필수 입력 항목을 입력하지 않음");
-  }
-  console.log(name, color, treatType);
-  const user = await models.User.findOne({
-    where: {
-      UUID: userUUID,
-    },
-  });
-  console.log("user는 ", user);
-  models.SymptomType.create({
-    UserUUID: userUUID,
-    name,
-    color,
-    treatType,
-    user: user.dataValues,
-  }).then((result) => {
-    res.send(result);
-  });
-});
-
-app.get("/symptom-type", async (req, res) => {
-  const userUUID = req.query.UUID;
-  models.User.findOne({
-    where: {
-      UUID: userUUID,
-    },
-    include: [
-      {
-        model: models.SymptomType,
-      },
-    ],
-  }).then((result) => {
-    res.send(result);
-  });
 });
 
 app.listen(port, () => {

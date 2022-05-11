@@ -34,5 +34,17 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.STRING,
     },
   });
+  treat.associate = function (models) {
+    treat.belongsTo(models.Symptom, {
+      foreignKey: "symptomId",
+      targetKey: "id",
+      constraints: false,
+    });
+    treat.hasMany(models.Symptom, {
+      foreignKey: "treatId",
+      sourceKey: "id",
+      constraints: false,
+    });
+  };
   return treat;
 };
