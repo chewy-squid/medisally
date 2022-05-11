@@ -3,8 +3,21 @@ const models = require("../models");
 
 const router = express.Router();
 
-router.post("/symptom", (req, res) => {
-  const treatId = undefined;
+//증상 등록하기
+router.post("/symptom", async (req, res) => {
+  let treatId = 0;
+  const symptomTypeId = req.query.symptomTypeId;
+  const userUUID = req.query.userUUID;
+  const user = await models.User.findOne({
+    where: {
+      UUID: userUUID,
+    },
+  });
+  const symptomType = await models.SymptomType.findOne({
+    where: {
+      id: symptomTypeId,
+    },
+  });
   const body = req.body;
   const {
     time,
@@ -22,31 +35,16 @@ router.post("/symptom", (req, res) => {
   }
   if (req.query.treatId) {
     treatId = req.query.treatId;
-    models.Treat.findOne({
+    const causeTreat = await models.Treat.findOne({
       where: {
-        treatId: id,
+        id: treatId,
       },
-    })
-      .then((causeTreat) => {
-        models.Symptom.create({
-          treatId,
-          time,
-          importance,
-          fiveScale,
-          numbScale,
-          scaleType,
-          memo,
-          voiceUrl,
-          videoUrl,
-          imageUrls,
-          treat: causeTreat.dataValues,
-        });
-      })
-      .then((result) => {
-        res.send(result);
-      });
-  } else {
+    });
+
     models.Symptom.create({
+      userUUID,
+      symptomTypeId,
+      treatId,
       time,
       importance,
       fiveScale,
@@ -56,6 +54,27 @@ router.post("/symptom", (req, res) => {
       voiceUrl,
       videoUrl,
       imageUrls,
+      user: user.dataValues,
+      treat: causeTreat.dataValues,
+      symptomType: symptomType.dataValues,
+    }).then((result) => {
+      res.send(result);
+    });
+  } else {
+    models.Symptom.create({
+      userUUID,
+      symptomTypeId,
+      time,
+      importance,
+      fiveScale,
+      numbScale,
+      scaleType,
+      memo,
+      voiceUrl,
+      videoUrl,
+      imageUrls,
+      user: user.dataValues,
+      symptomType: symptomType.dataValues,
     })
       .then((result) => {
         console.log("증상 기록 생성 결과 :", result);
@@ -69,5 +88,14 @@ router.post("/symptom", (req, res) => {
       });
   }
 });
+
+//유저별 증상 가져오기
+router.get("/symptom", async (req, res) => {});
+
+//증상 종류별 증상 가져오기
+
+//날짜별 증상 가져오기
+
+//증상 지정, 날짜별 증상 가져오기
 
 module.exports = router;

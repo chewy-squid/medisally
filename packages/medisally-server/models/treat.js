@@ -10,12 +10,8 @@ module.exports = function (sequelize, DataTypes) {
       defaultValue: false,
       allowNull: false,
     },
-    symptomType: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
     treatType: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     effect: {

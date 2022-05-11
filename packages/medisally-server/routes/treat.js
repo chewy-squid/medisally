@@ -3,13 +3,12 @@ const models = require("../models");
 
 const router = express.Router();
 
-router.post("/treat", (req, res) => {
-  const symptomId = undefined;
+router.post("/treat", async (req, res) => {
+  let symptomId = 0;
   const body = req.body;
   const {
     time,
     importance,
-    symptomType,
     treatType,
     effect,
     memo,
@@ -17,39 +16,32 @@ router.post("/treat", (req, res) => {
     videoUrl,
     imageUrls,
   } = body;
-  if (!time || !importance || !symptomType || !treatType) {
-    res.status(400).send("필수 입력 항목을 입력하지 않음");
-  }
+
   if (req.query.symptomId) {
     symptomId = req.query.symptomId;
-    models.Symptom.findOne({
+    const causeSymptom = await models.Symptom.findOne({
       where: {
-        symptomId: id,
+        id: symptomId,
       },
-    })
-      .then((causeSymptom) => {
-        models.Symptom.creat({
-          symptomId,
-          time,
-          importance,
-          symptomType,
-          treatType,
-          effect,
-          memo,
-          voiceUrl,
-          videoUrl,
-          imageUrls,
-          symptom: causeSymptom.dataValues,
-        });
-      })
-      .then((result) => {
-        res.send(result);
-      });
-  } else {
-    models.Symptom.create({
+    });
+    models.Treat.create({
+      symptomId,
       time,
       importance,
-      symptomType,
+      treatType,
+      effect,
+      memo,
+      voiceUrl,
+      videoUrl,
+      imageUrls,
+      symptom: causeSymptom.dataValues,
+    }).then((result) => {
+      res.send(result);
+    });
+  } else {
+    models.Treat.create({
+      time,
+      importance,
       treatType,
       effect,
       memo,

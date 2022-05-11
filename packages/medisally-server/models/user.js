@@ -27,6 +27,10 @@ module.exports = function (sequelize, DataTypes) {
       foreignKey: "UserUUID",
       sourceKey: "UUID",
     });
+    user.hasMany(models.Symptom, {
+      foreignKey: "userUUID",
+      sourceKey: "UUID",
+    });
   };
   return user;
 };

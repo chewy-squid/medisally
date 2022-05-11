@@ -38,6 +38,10 @@ module.exports = function (sequelize, DataTypes) {
     {}
   );
   symptom.associate = function (models) {
+    symptom.belongsTo(models.User, {
+      foreignKey: "userUUID",
+      targetKey: "UUID",
+    });
     symptom.belongsTo(models.SymptomType, {
       foreignKey: "symptomTypeId",
       targetKey: "id",
