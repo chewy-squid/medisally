@@ -24,10 +24,18 @@ module.exports = function (sequelize, DataTypes) {
   );
   user.associate = function (models) {
     user.hasMany(models.SymptomType, {
-      foreignKey: "UserUUID",
+      foreignKey: "userUUID",
       sourceKey: "UUID",
     });
     user.hasMany(models.Symptom, {
+      foreignKey: "userUUID",
+      sourceKey: "UUID",
+    });
+    user.hasMany(models.Treat, {
+      foreignKey: "userUUID",
+      sourceKey: "UUID",
+    });
+    user.hasMany(models.TreatType, {
       foreignKey: "userUUID",
       sourceKey: "UUID",
     });

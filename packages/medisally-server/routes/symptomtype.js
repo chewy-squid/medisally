@@ -18,7 +18,7 @@ router.post("/symptom-type", async (req, res) => {
     },
   });
   models.SymptomType.create({
-    UserUUID: userUUID,
+    userUUID: userUUID,
     name,
     color,
     treatType,

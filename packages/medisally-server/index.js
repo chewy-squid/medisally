@@ -140,35 +140,6 @@ app.get("/symptomsByType", (req, res) => {
     });
 });
 
-//날짜별 증상 기록 모두 불러오기
-app.get("/symptomsByDate", (req, res) => {
-  const time = dayjs(req.query.time).format("YYYY-MM-DD");
-  console.log(time);
-  const startTime = new Date(String(time));
-  console.log(startTime);
-  const endTime = new Date(String(time) + " 23:59:59");
-  console.log(endTime);
-  console.log(dayjs(endTime).isValid());
-  console.log(dayjs(startTime).isValid());
-  models.Symptom.findAll({
-    where: {
-      [Op.or]: [
-        { time: { [Op.between]: [startTime, endTime] } },
-        { time: startTime },
-      ],
-    },
-  })
-    .then((result) => {
-      res.send({
-        symptoms: result,
-      });
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(400).send("날짜별 증상 기록 조회에 에러 발생");
-    });
-});
-
 //증상 종류별 복약/처치 기록 모두 조회하기
 app.get("/treats", (req, res) => {
   const symptomType = req.query.symptomType;

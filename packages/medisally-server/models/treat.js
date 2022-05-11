@@ -10,10 +10,6 @@ module.exports = function (sequelize, DataTypes) {
       defaultValue: false,
       allowNull: false,
     },
-    treatType: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
     effect: {
       type: DataTypes.ENUM(1, 2, 3),
     },
@@ -40,6 +36,18 @@ module.exports = function (sequelize, DataTypes) {
       foreignKey: "treatId",
       sourceKey: "id",
       constraints: false,
+    });
+    treat.belongsTo(models.User, {
+      foreignKey: "userUUID",
+      targetKey: "UUID",
+    });
+    treat.belongsTo(models.TreatType, {
+      foreignKey: "treatTypeId",
+      targetKey: "id",
+    });
+    treat.belongsTo(models.SymptomType, {
+      foreignKey: "symptomTypeId",
+      targetKey: "id",
     });
   };
   return treat;
