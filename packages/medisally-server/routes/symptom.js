@@ -32,7 +32,12 @@ router.post("/symptom", async (req, res) => {
     videoUrl,
     imageUrls,
   } = body;
-  if (!time || importance === undefined || !scaleType) {
+  if (
+    !time ||
+    importance === undefined ||
+    !scaleType ||
+    (!fiveScale && !numbScale)
+  ) {
     res.status(400).send("필수 입력 항목을 입력하지 않음");
   }
   if (req.query.treatId) {
@@ -193,7 +198,5 @@ router.get("/symptom", async (req, res) => {
       });
   }
 });
-
-//증상 지정, 날짜별 증상 가져오기
 
 module.exports = router;

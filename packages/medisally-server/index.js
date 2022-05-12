@@ -8,6 +8,8 @@ const userRouter = require("./routes/user.js");
 const symptomTypeRouter = require("./routes/symptomtype.js");
 const symptomRouter = require("./routes/symptom.js");
 const treatRouter = require("./routes/treat.js");
+const wholeRouter = require("./routes/whole.js");
+const treatTypeRouter = require("./routes/treatType.js");
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -20,6 +22,8 @@ app.use("/", userRouter);
 app.use("/", symptomTypeRouter);
 app.use("/", symptomRouter);
 app.use("/", treatRouter);
+app.use("/", wholeRouter);
+app.use("/", treatTypeRouter);
 
 const upload = multer({
   storage: multer.diskStorage({
@@ -119,25 +123,6 @@ app.delete("/symptoms/:id", (req, res) => {
     },
   });
   res.send("Delete Request Sent");
-});
-
-//증상 종류별 증상 기록 모두 불러오기
-app.get("/symptomsByType", (req, res) => {
-  const symptomType = req.query.symptomType;
-  models.Symptom.findAll({
-    where: {
-      symptomType: symptomType,
-    },
-  })
-    .then((result) => {
-      res.send({
-        symptoms: result,
-      });
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(400).send("증상 종류별 증상 기록 조회에 에러 발생");
-    });
 });
 
 //증상 종류별 복약/처치 기록 모두 조회하기
