@@ -45,7 +45,7 @@ const CheckList = (props) => {
       {items.map((item, index) => (
         <TouchableOpacity key={index} onPress={() => {}}>
           <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: index === items.length - 1 ? 0 : 15 }}>
-            <Ionicons name={'close-circle'} size={25} color='#fd2b2e' style={{width: 25, height: 25, alignItems: 'center', justifyContent: 'center', marginRight: 10}}/>
+            <Ionicons name={'close-circle'} size={25} color='darkgray' style={{width: 25, height: 25, alignItems: 'center', justifyContent: 'center', marginRight: 10}}/>
             <View style={{flex: 1, borderRadius: 5, borderWidth: StyleSheet.hairlineWidth, borderColor: colors.border, minHeight: 20, padding: 10, backgroundColor: colors.background}}>
               <Text style={{color: '#111', lineHeight: 25, fontSize: 15, fontWeight: '500'}}>{item.content}</Text>
             </View>

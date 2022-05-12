@@ -66,7 +66,7 @@ const AddModal = (props) => {
             }}>
               <View style={{borderRadius: 12.5, overflow: 'hidden', position: 'absolute', top: 0, left: 0, bottom: 0, right: 0}}>
               <LinearGradient
-                colors={['#199c4b', '#179b87']}
+                colors={[colors.primaryGradient, colors.primary]}
                 start={[0, 0]}
                 end={[1, 1]}
                 style={{

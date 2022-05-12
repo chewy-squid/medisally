@@ -37,7 +37,7 @@ const AppContainer = () => {
       <Tab.Navigator
         screenOptions={({ route }) => ({
           tabBarIcon: ({ color, size }) => {
-            return <Ionicons name={route.name === 'Home' ? 'home' : 'bar-chart'} size={size} color={color} />;
+            return <Ionicons name={route.name === 'HomeStack' ? 'home' : 'bar-chart'} size={size} color={color} />;
           },
           tabBarBackground: () => (
             <View style={{ flex: 1 }}>
@@ -58,7 +58,7 @@ const AppContainer = () => {
         <Tab.Screen name="Pay" component={AddScreen} options={{
           tabBarButton: () => (<AddModalButton/>),
         }} />
-        <Tab.Screen name="Stats" component={StatsScreen} options={{ title: '기록', headerShown: false }}/>
+        <Tab.Screen name="StatsStack" component={StatsScreen} options={{ title: '기록', headerShown: false }}/>
       </Tab.Navigator>
       
       <AddModal modalState={modalState}/>
