@@ -6,7 +6,7 @@ module.exports = function (sequelize, DataTypes) {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      desigSex: {
+      designatedSex: {
         type: DataTypes.ENUM("female", "male"),
         allowNull: false,
       },

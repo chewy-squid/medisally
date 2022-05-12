@@ -7,11 +7,10 @@ router.post("/symptom-type", async (req, res) => {
   const userUUID = req.query.UUID;
   console.log(userUUID);
   const body = req.body;
-  const { name, color, treatType } = body;
+  const { name, color, scaleType } = body;
   if (!name || !color) {
     res.status(400).send("필수 입력 항목을 입력하지 않음");
   }
-  console.log(name, color, treatType);
   const user = await models.User.findOne({
     where: {
       UUID: userUUID,
@@ -21,7 +20,7 @@ router.post("/symptom-type", async (req, res) => {
     userUUID: userUUID,
     name,
     color,
-    treatType,
+    scaleType,
     user: user.dataValues,
   }).then((result) => {
     res.send(result);

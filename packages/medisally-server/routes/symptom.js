@@ -25,8 +25,8 @@ router.post("/symptom", async (req, res) => {
     time,
     importance,
     fiveScale,
-    numbScale,
-    scaleType,
+    numberScale,
+
     memo,
     voiceUrl,
     videoUrl,
@@ -55,8 +55,8 @@ router.post("/symptom", async (req, res) => {
       time,
       importance,
       fiveScale,
-      numbScale,
-      scaleType,
+      numberScale,
+
       memo,
       voiceUrl,
       videoUrl,
@@ -74,8 +74,8 @@ router.post("/symptom", async (req, res) => {
       time,
       importance,
       fiveScale,
-      numbScale,
-      scaleType,
+      numberScale,
+
       memo,
       voiceUrl,
       videoUrl,

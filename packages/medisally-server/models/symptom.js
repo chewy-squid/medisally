@@ -15,12 +15,8 @@ module.exports = function (sequelize, DataTypes) {
       fiveScale: {
         type: DataTypes.ENUM(1, 2, 3, 4, 5),
       },
-      numbScale: {
+      numberScale: {
         type: DataTypes.FLOAT,
-      },
-      scaleType: {
-        type: DataTypes.ENUM("fiveScale", "numbScale"),
-        allowNull: false,
       },
       memo: {
         type: DataTypes.STRING,

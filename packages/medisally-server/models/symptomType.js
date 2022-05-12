@@ -10,9 +10,8 @@ module.exports = function (sequelize, DataTypes) {
         type: DataTypes.ENUM("color", "color2", "color3"),
         allowNull: false,
       },
-      treatTypes: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
+      scaleType: {
+        type: DataTypes.ENUM("fiveScale", "numbScale"),
       },
     },
     {}
@@ -32,8 +31,8 @@ module.exports = function (sequelize, DataTypes) {
     });
     symptomType.hasMany(models.Treat, {
       foreignKey: "symptomTypeId",
-      sourceKey: "id"
-    })
+      sourceKey: "id",
+    });
   };
   return symptomType;
 };

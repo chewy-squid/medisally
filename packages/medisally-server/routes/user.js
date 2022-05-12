@@ -23,13 +23,13 @@ router.get("/user", (req, res) => {
 
 router.post("/user", (req, res) => {
   const body = req.body;
-  const { nickname, desigSex, birthDate } = body;
-  if (!nickname || !desigSex || !birthDate) {
+  const { nickname, designatedSex, birthDate } = body;
+  if (!nickname || !designatedSex || !birthDate) {
     res.status(400).send("필수 입력 항목을 입력하지 않음");
   }
   models.User.create({
     nickname,
-    desigSex,
+    designatedSex,
     birthDate,
   })
     .then((result) => {
