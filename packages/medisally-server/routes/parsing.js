@@ -5,9 +5,23 @@ function split(req) {
   const symptoms = body.Symptoms;
   const treatTypes = body.TreatTypes;
   const treats = body.Treats;
-  let { nickname, desigSex, birthDate, UUID, createdAt, updatedAt, ...rest } =
-    body;
-  const user = { nickname, desigSex, birthDate, UUID, createdAt, updatedAt };
+  let {
+    nickname,
+    designatedSex,
+    birthDate,
+    UUID,
+    createdAt,
+    updatedAt,
+    ...rest
+  } = body;
+  const user = {
+    nickname,
+    designatedSex,
+    birthDate,
+    UUID,
+    createdAt,
+    updatedAt,
+  };
 
   return { user, symptomTypes, symptoms, treatTypes, treats };
 }

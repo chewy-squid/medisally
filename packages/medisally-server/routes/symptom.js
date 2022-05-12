@@ -32,12 +32,7 @@ router.post("/symptom", async (req, res) => {
     videoUrl,
     imageUrls,
   } = body;
-  if (
-    !time ||
-    importance === undefined ||
-    !scaleType ||
-    (!fiveScale && !numbScale)
-  ) {
+  if (!time || importance === undefined || (!fiveScale && !numberScale)) {
     res.status(400).send("필수 입력 항목을 입력하지 않음");
   }
   if (req.query.treatId) {
