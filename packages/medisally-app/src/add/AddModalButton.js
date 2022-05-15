@@ -10,7 +10,7 @@ const AddModalButton = () => {
   const { colors } = useTheme()
 
   return (
-    <View style={{backgroundColor: '#199c4b', width: 65, height: 65, marginTop: -10, borderRadius: 65, alignItems: 'center', justifyContent: 'center',
+    <View style={{backgroundColor: colors.primary, width: 65, height: 65, marginTop: -10, borderRadius: 65, alignItems: 'center', justifyContent: 'center',
     shadowColor: "rgba(0,0,0,0.75)",
     shadowOffset: {
       width: 0,
@@ -24,7 +24,7 @@ const AddModalButton = () => {
         <View style={{width: 65, height: 65, borderRadius: 65, alignItems: 'center', justifyContent: 'center', borderWidth: 2, borderColor: 'rgba(255,255,255,0.25)', overflow: 'hidden'}}>
           <View style={{width: 65, height: 65, borderRadius: 65, overflow: 'hidden', position: 'absolute', top: -2, left: -2, right: 0, bottom: 0}}>
             <LinearGradient
-              colors={['#199c4b', '#179b87']}
+              colors={[colors.primaryGradient, colors.primary]}
               start={[0, 0]}
               end={[1, 1]}
               style={{

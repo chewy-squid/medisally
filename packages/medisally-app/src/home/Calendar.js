@@ -148,20 +148,23 @@ const Calendar = (props) => {
         }}
         markingType={'multi-dot'}
         markedDates={{
-          '2022-04-11': {dots: [
+          '2022-05-11': {dots: [
             {key: '1', color: 'tomato'},
             {key: '2', color: 'dodgerblue'},
             {key: '3', color: 'hotpink'}
           ]},
-          '2022-04-22': {dots: [
+          '2022-05-22': {dots: [
             {key: '1', color: 'orange'},
             {key: '2', color: 'forestgreen'},
             {key: '3', color: 'silver'}
           ]},
-          '2022-04-21': {dots: [
+          '2022-05-21': {dots: [
             {key: '1', color: 'dodgerblue'},
+          ],
+          flags: [
+            {key: '1', color: 'tomato'}
           ]},
-          '2022-04-30': {dots: [
+          '2022-05-30': {dots: [
             {key: '1', color: 'dodgerblue'},
           ]},
         }}
@@ -178,6 +181,9 @@ const Calendar = (props) => {
                   <View key={index} style={{width: 5, height: 5, borderRadius: 5, backgroundColor: dot.color, marginHorizontal: 1}} />
                 ))}
               </View>
+              {marking && marking.flags &&
+                <Ionicons name="flag" size={15} style={{color: 'tomato', position: 'absolute', top: 2, right: -7}}/>
+              }
             </View>
           );
         }}

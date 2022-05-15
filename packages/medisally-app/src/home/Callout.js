@@ -19,7 +19,7 @@ const Callout = (props) => {
     }, props.style]}>
       <View style={{position: 'absolute', top: 0, right: 0, left: 0, bottom: 0, overflow: 'hidden', borderRadius: 15}}>
       <LinearGradient
-        colors={['#199c4b', '#179b87']}
+        colors={[colors.primaryGradient, colors.primary]}
         start={[0, 0]}
         end={[1, 1]}
         style={{
@@ -55,7 +55,7 @@ const Callout = (props) => {
         }}/>
       </View>
 
-      <View style={{height: 2, backgroundColor: '#18925a', marginBottom: 10}}/>
+      <View style={{height: 2, backgroundColor: 'rgba(0,0,0,0.1)', marginBottom: 10}}/>
 
       <Text style={{color: 'white', marginBottom: 15, fontSize: 15, fontWeight: '600'}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud</Text>
 

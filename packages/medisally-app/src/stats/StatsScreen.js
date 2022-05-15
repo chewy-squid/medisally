@@ -3,11 +3,24 @@ import { Text, View, ScrollView, TouchableOpacity, StyleSheet } from 'react-nati
 import useSWR from 'swr'
 import { useTheme } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons'
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Header from '../common/Header.js'
 import GradientBackground from '../common/GradientBackground.js'
+import StatScreen from './StatScreen.js'
 
-const StatsScreen = () => {
+const Stack = createNativeStackNavigator();
+
+const StatsScreenStack = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Stats" component={StatsScreen} options={{headerShown: false}} />
+      <Stack.Screen name="Stat" component={StatScreen} options={{headerShown: false}} />
+    </Stack.Navigator>
+  )
+}
+
+const StatsScreen = ({ navigation }) => {
   const { colors } = useTheme()
   const { data, error } = useSWR('/test')
 
@@ -66,7 +79,7 @@ const StatsScreen = () => {
                 {index !== 0 && 
                   <View style={{height: StyleSheet.hairlineWidth, backgroundColor: colors.border, marginLeft: 40}}/>
                 }
-                <TouchableOpacity key={index}>
+                <TouchableOpacity key={index} onPress={() => navigation.push('Stat', {symptomId: item})}>
                   <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', backgroundColor: 'card', height: 55, paddingHorizontal: 20, paddingRight: 15}}>
                     <View style={{width: 10, height: 10, borderRadius: 10, backgroundColor: 'tomato', marginRight: 15}}/>
                     <Text style={{fontSize: 16, fontWeight: '700'}}>증상 {item}</Text>
@@ -82,4 +95,4 @@ const StatsScreen = () => {
   );
 }
 
-export default StatsScreen
+export default StatsScreenStack

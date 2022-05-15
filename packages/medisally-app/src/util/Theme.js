@@ -5,7 +5,11 @@ const themes = {
       background: "#f1f2f5",
       border: "#dfdfdf",
       card: "#fefeff",
-      primary: "#189d4a",
+      // primary: "#189d4a",
+      // primary: '#27a253',
+      // primaryGradient: '#218a47',
+      primary: '#7797de',
+      primaryGradient: '#5f79b2',
       text: "#000100",
 
       lightred: '#fff5f5',
