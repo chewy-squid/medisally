@@ -1,6 +1,7 @@
 const express = require("express");
 const models = require("../models");
 const split = require("./parsing");
+const arrToObj = require("./arrToObj");
 
 const router = express.Router();
 
@@ -10,21 +11,49 @@ router.get("/whole", async (req, res) => {
     where: {
       UUID: userUUID,
     },
+    attributes: {
+      exclude: [
+        "nickname",
+        "designatedSex",
+        "birthDate",
+        "UUID",
+        "createdAt",
+        "updatedAt",
+      ],
+    },
     include: [
       {
         model: models.SymptomType,
+        attributes: {
+          exclude: ["createdAt", "updatedAt", "userUUID"],
+        },
       },
       {
         model: models.Symptom,
+        attributes: {
+          exclude: ["createdAt", "updatedAt", "userUUID"],
+        },
       },
       {
         model: models.TreatType,
+        attributes: {
+          exclude: ["createdAt", "updatedAt", "userUUID"],
+        },
       },
       {
         model: models.Treat,
+        attributes: {
+          exclude: ["createdAt", "updatedAt", "userUUID"],
+        },
       },
     ],
   });
+
+  user.dataValues.SymptomTypes = arrToObj(user.SymptomTypes);
+  user.dataValues.Symptoms = arrToObj(user.Symptoms);
+  user.dataValues.TreatTypes = arrToObj(user.TreatTypes);
+  user.dataValues.Treats = arrToObj(user.Treats);
+
   res.send(user);
 });
 
@@ -74,21 +103,47 @@ router.post("/whole", async (req, res) => {
     where: {
       UUID: userUUID,
     },
+    attributes: {
+      exclude: [
+        "nickname",
+        "designatedSex",
+        "birthDate",
+        "UUID",
+        "createdAt",
+        "updatedAt",
+      ],
+    },
     include: [
       {
         model: models.SymptomType,
+        attributes: {
+          exclude: ["createdAt", "updatedAt", "userUUID"],
+        },
       },
       {
         model: models.Symptom,
+        attributes: {
+          exclude: ["createdAt", "updatedAt", "userUUID"],
+        },
       },
       {
         model: models.TreatType,
+        attributes: {
+          exclude: ["createdAt", "updatedAt", "userUUID"],
+        },
       },
       {
         model: models.Treat,
+        attributes: {
+          exclude: ["createdAt", "updatedAt", "userUUID"],
+        },
       },
     ],
   });
+  user.dataValues.SymptomTypes = arrToObj(user.SymptomTypes);
+  user.dataValues.Symptoms = arrToObj(user.Symptoms);
+  user.dataValues.TreatTypes = arrToObj(user.TreatTypes);
+  user.dataValues.Treats = arrToObj(user.Treats);
   res.send(user);
 });
 
